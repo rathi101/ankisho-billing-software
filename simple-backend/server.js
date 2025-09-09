@@ -93,6 +93,48 @@ app.get('/api/marketplace/configs', (req, res) => {
   res.json({ success: true, data: [] });
 });
 
+// Auth Routes
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+  
+  // Mock authentication - you can customize these credentials
+  if (email === 'admin@ankisho.com' && password === 'admin123') {
+    res.json({
+      success: true,
+      data: {
+        token: 'mock-jwt-token-' + Date.now(),
+        user: { 
+          id: '1', 
+          name: 'Admin User', 
+          email: 'admin@ankisho.com', 
+          role: 'admin' 
+        }
+      }
+    });
+  } else {
+    res.status(401).json({ 
+      success: false, 
+      message: 'Invalid email or password' 
+    });
+  }
+});
+
+app.post('/api/auth/register', (req, res) => {
+  const { name, email, password } = req.body;
+  res.json({
+    success: true,
+    data: {
+      token: 'mock-jwt-token-' + Date.now(),
+      user: { 
+        id: '2', 
+        name, 
+        email, 
+        role: 'user' 
+      }
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
