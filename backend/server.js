@@ -8,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: ['http://localhost:3000', 'http://localhost:3002', 'https://ankisho-billing-software.netlify.app'],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
@@ -28,17 +28,20 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/billing-s
   process.exit(1);
 });
 
+// Import auth middleware
+const { protect } = require('./src/middleware/auth');
+
 // Routes
 app.use('/api/auth', require('./src/routes/auth'));
 app.use('/api/staff-requests', require('./src/routes/staffRequests'));
-app.use('/api/products', require('./src/routes/products'));
-app.use('/api/customers', require('./src/routes/customers'));
-app.use('/api/suppliers', require('./src/routes/suppliers'));
-app.use('/api/sales', require('./src/routes/sales'));
-app.use('/api/purchases', require('./src/routes/purchases'));
-app.use('/api/dashboard', require('./src/routes/dashboard'));
-app.use('/api/staff', require('./src/routes/staff'));
-app.use('/api/marketplace', require('./src/routes/marketplace'));
+app.use('/api/products', protect, require('./src/routes/products'));
+app.use('/api/customers', protect, require('./src/routes/customers'));
+app.use('/api/suppliers', protect, require('./src/routes/suppliers'));
+app.use('/api/sales', protect, require('./src/routes/sales'));
+app.use('/api/purchases', protect, require('./src/routes/purchases'));
+app.use('/api/dashboard', protect, require('./src/routes/dashboard'));
+app.use('/api/staff', protect, require('./src/routes/staff'));
+app.use('/api/marketplace', protect, require('./src/routes/marketplace'));
 
 // Health Check Route
 app.get('/api/health', (req, res) => {

@@ -216,6 +216,12 @@ const saleSchema = new mongoose.Schema({
   returnReason: {
     type: String,
     trim: true
+  },
+  // Track who created this sale
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Staff',
+    required: true
   }
 }, {
   timestamps: true,
@@ -247,6 +253,7 @@ saleSchema.index({ saleDate: -1 });
 saleSchema.index({ status: 1 });
 saleSchema.index({ paymentStatus: 1 });
 saleSchema.index({ customerPhone: 1 });
+saleSchema.index({ createdBy: 1 });
 
 // Pre-save middleware to generate invoice number
 saleSchema.pre('save', async function(next) {

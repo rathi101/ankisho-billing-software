@@ -80,6 +80,56 @@ app.get('/api/dashboard', (req, res) => {
   });
 });
 
+app.get('/api/dashboard/stats', (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      inventory: {
+        totalProducts: products.length,
+        lowStockProducts: 2,
+        outOfStockProducts: 0
+      },
+      customers: {
+        total: customers.length,
+        activeToday: 1
+      },
+      suppliers: {
+        total: 0
+      },
+      sales: {
+        today: {
+          revenue: 200,
+          orders: 1
+        },
+        month: {
+          revenue: 5000,
+          orders: 25
+        }
+      },
+      purchases: {
+        today: {
+          amount: 0,
+          orders: 0
+        },
+        month: {
+          amount: 0,
+          orders: 0
+        }
+      },
+      payments: {
+        pending: {
+          amount: 0,
+          orders: 0
+        }
+      },
+      recent: {
+        sales: sales,
+        purchases: []
+      }
+    }
+  });
+});
+
 app.get('/api/purchases', (req, res) => {
   res.json({ success: true, data: [] });
 });

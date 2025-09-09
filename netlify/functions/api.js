@@ -2,6 +2,12 @@
 exports.handler = async (event, context) => {
   const { httpMethod, path, queryStringParameters, body } = event;
   
+  // Extract the route from the path - remove /.netlify/functions/api prefix
+  let apiRoute = path;
+  if (path.startsWith('/.netlify/functions/api')) {
+    apiRoute = path.replace('/.netlify/functions/api', '') || '/';
+  }
+  
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -41,8 +47,8 @@ exports.handler = async (event, context) => {
     }
   ];
 
-  // Route handling - path parameter contains the route after /api/
-  const route = path || '/';
+  // Route handling
+  const route = apiRoute;
   
   try {
     // Handle root path
@@ -147,6 +153,129 @@ exports.handler = async (event, context) => {
         statusCode: 200,
         headers,
         body: JSON.stringify({ success: true, data: [] })
+      };
+    }
+
+    // Handle auth/login
+    if (route === '/auth/login' && httpMethod === 'POST') {
+      const requestBody = JSON.parse(body || '{}');
+      const { email, password } = requestBody;
+      
+      // Mock authentication - replace with real auth logic
+      if (email === 'admin@ankisho.com' && password === 'admin123') {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Login successful',
+            token: 'mock-jwt-token-admin',
+            user: {
+              _id: '1',
+              name: 'Admin User',
+              email: 'admin@ankisho.com',
+              role: 'admin',
+              permissions: {
+                products: true,
+                customers: true,
+                suppliers: true,
+                sales: true,
+                purchases: true,
+                reports: true,
+                settings: true
+              }
+            }
+          })
+        };
+      } else if (email === 'sharmasahab24@gmail.com' && password === 'password123') {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            success: true,
+            message: 'Login successful',
+            token: 'mock-jwt-token-staff',
+            user: {
+              _id: '2',
+              name: 'Pawan Sharma',
+              email: 'sharmasahab24@gmail.com',
+              role: 'staff',
+              permissions: {
+                products: false,
+                customers: true,
+                suppliers: false,
+                sales: true,
+                purchases: false,
+                reports: false,
+                settings: false
+              }
+            }
+          })
+        };
+      } else {
+        return {
+          statusCode: 401,
+          headers,
+          body: JSON.stringify({
+            success: false,
+            message: 'Invalid email or password'
+          })
+        };
+      }
+    }
+
+    // Handle dashboard/stats
+    if (route === '/dashboard/stats') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            inventory: {
+              totalProducts: products.length,
+              lowStockProducts: 0,
+              outOfStockProducts: 0
+            },
+            customers: {
+              total: customers.length,
+              activeToday: 0
+            },
+            suppliers: {
+              total: 0
+            },
+            sales: {
+              today: {
+                revenue: 0,
+                orders: 0
+              },
+              month: {
+                revenue: 200,
+                orders: 1
+              }
+            },
+            purchases: {
+              today: {
+                amount: 0,
+                orders: 0
+              },
+              month: {
+                amount: 0,
+                orders: 0
+              }
+            },
+            payments: {
+              pending: {
+                amount: 0,
+                orders: 0
+              }
+            },
+            recent: {
+              sales: sales,
+              purchases: []
+            }
+          }
+        })
       };
     }
 

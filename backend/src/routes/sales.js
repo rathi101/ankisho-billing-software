@@ -32,6 +32,11 @@ router.get('/', async (req, res) => {
 
     const filter = {};
     
+    // Role-based filtering: staff can only see their own sales
+    if (req.user.role === 'staff') {
+      filter.createdBy = req.user.id;
+    }
+    
     if (status) {
       filter.status = status;
     }
@@ -176,7 +181,8 @@ router.post('/', validateSale, async (req, res) => {
       totalGst,
       totalAmount,
       finalAmount,
-      roundOffAmount
+      roundOffAmount,
+      createdBy: req.user.id // Track who created this sale
     };
 
     const sale = new Sale(saleData);

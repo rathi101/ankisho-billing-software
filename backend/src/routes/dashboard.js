@@ -9,6 +9,13 @@ const Supplier = require('../models/Supplier');
 // GET /api/dashboard/stats - Get dashboard statistics
 router.get('/stats', async (req, res) => {
   try {
+    // Check if user is authenticated
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required'
+      });
+    }
     const today = new Date();
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));
     const endOfDay = new Date(today.setHours(23, 59, 59, 999));
@@ -43,7 +50,8 @@ router.get('/stats', async (req, res) => {
         {
           $match: {
             saleDate: { $gte: startOfDay, $lte: endOfDay },
-            status: { $ne: 'cancelled' }
+            status: { $ne: 'cancelled' },
+            ...(req.user.role === 'staff' ? { createdBy: req.user.id } : {})
           }
         },
         {
@@ -60,7 +68,8 @@ router.get('/stats', async (req, res) => {
         {
           $match: {
             saleDate: { $gte: startOfMonth, $lte: endOfMonth },
-            status: { $ne: 'cancelled' }
+            status: { $ne: 'cancelled' },
+            ...(req.user.role === 'staff' ? { createdBy: req.user.id } : {})
           }
         },
         {
@@ -110,7 +119,8 @@ router.get('/stats', async (req, res) => {
       Sale.aggregate([
         {
           $match: {
-            paymentStatus: { $in: ['pending', 'partial'] }
+            paymentStatus: { $in: ['pending', 'partial'] },
+            ...(req.user.role === 'staff' ? { createdBy: req.user.id } : {})
           }
         },
         {
@@ -123,7 +133,10 @@ router.get('/stats', async (req, res) => {
       ]),
       
       // Recent sales (last 10)
-      Sale.find({ status: { $ne: 'cancelled' } })
+      Sale.find({ 
+        status: { $ne: 'cancelled' },
+        ...(req.user.role === 'staff' ? { createdBy: req.user.id } : {})
+      })
         .populate('customer', 'name')
         .sort({ saleDate: -1 })
         .limit(10)
