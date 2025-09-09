@@ -5,9 +5,20 @@ exports.handler = async (event, context) => {
   // Debug logging
   console.log('Function called with:', { httpMethod, path, queryStringParameters });
   
-  // For Netlify functions, the path parameter contains the route after the function name
-  // So /.netlify/functions/api/auth/login becomes just /auth/login
+  // For Netlify functions with redirects, we need to extract route from query parameters
+  // The redirect passes the path as a query parameter
   let apiRoute = path || '/';
+  
+  // Check if we have query parameters that contain the actual route
+  if (queryStringParameters && queryStringParameters['0']) {
+    apiRoute = '/' + queryStringParameters['0'];
+  } else if (event.rawUrl) {
+    // Extract route from rawUrl if available
+    const match = event.rawUrl.match(/\.netlify\/functions\/api(.*)$/);
+    if (match) {
+      apiRoute = match[1] || '/';
+    }
+  }
   
   console.log('Processed route:', apiRoute);
   
