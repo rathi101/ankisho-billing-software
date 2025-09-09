@@ -2,11 +2,14 @@
 exports.handler = async (event, context) => {
   const { httpMethod, path, queryStringParameters, body } = event;
   
-  // Extract the route from the path - remove /.netlify/functions/api prefix
-  let apiRoute = path;
-  if (path.startsWith('/.netlify/functions/api')) {
-    apiRoute = path.replace('/.netlify/functions/api', '') || '/';
-  }
+  // Debug logging
+  console.log('Function called with:', { httpMethod, path, queryStringParameters });
+  
+  // For Netlify functions, the path parameter contains the route after the function name
+  // So /.netlify/functions/api/auth/login becomes just /auth/login
+  let apiRoute = path || '/';
+  
+  console.log('Processed route:', apiRoute);
   
   // CORS headers
   const headers = {
@@ -289,12 +292,18 @@ exports.handler = async (event, context) => {
     }
 
     // Default 404
+    console.log('No route matched, returning 404 for:', route);
     return {
       statusCode: 404,
       headers,
       body: JSON.stringify({
         success: false,
-        message: `Route ${route} not found`
+        message: `Route ${route} not found`,
+        debug: {
+          originalPath: path,
+          processedRoute: route,
+          method: httpMethod
+        }
       })
     };
   } catch (error) {
