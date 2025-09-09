@@ -222,6 +222,13 @@ app.get('/', (req, res) => {
   });
 });
 
+// Handle all routes with /api prefix
+app.use('/api', (req, res, next) => {
+  // Strip /api from the path and continue
+  req.url = req.url.replace('/api', '');
+  next();
+});
+
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({
