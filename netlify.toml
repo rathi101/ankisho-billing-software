@@ -1,7 +1,7 @@
 [build]
-  base = "frontend"
+  base = "."
   publish = "frontend/build"
-  command = "npm run build"
+  command = "cd frontend && npm run build"
   functions = "netlify/functions"
 
 [build.environment]
