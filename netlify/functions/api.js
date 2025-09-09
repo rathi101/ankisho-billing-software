@@ -19,23 +19,6 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Debug: Return event details to understand the structure
-  return {
-    statusCode: 200,
-    headers,
-    body: JSON.stringify({
-      debug: true,
-      timestamp: new Date().toISOString(),
-      event: {
-        httpMethod,
-        path,
-        queryStringParameters,
-        headers: event.headers
-      },
-      message: 'Debug response to understand Netlify Functions structure - Updated'
-    })
-  };
-
   // Sample data
   const products = [
     { _id: '1', name: 'Sample Product 1', price: 100, stock: 50, category: 'Electronics' },
@@ -58,7 +41,7 @@ exports.handler = async (event, context) => {
     }
   ];
 
-  // Route handling - path in Netlify Functions is just the path after the function name
+  // Route handling - path parameter contains the route after /api/
   const route = path || '/';
   
   try {

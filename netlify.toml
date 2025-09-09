@@ -9,12 +9,17 @@
   NPM_VERSION = "9"
 
 [[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
 [context.production.environment]
-  REACT_APP_API_URL = "https://ankisho-billing-software.netlify.app/.netlify/functions/api"
+  REACT_APP_API_URL = "https://ankisho-billing-software.netlify.app/api"
 
 [context.deploy-preview.environment]
   REACT_APP_API_URL = "https://ankisho-billing-backend-dev.herokuapp.com/api"
