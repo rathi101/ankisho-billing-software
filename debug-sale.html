@@ -1,68 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Debug Sale Creation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Authentication Fix - Step by Step</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .step { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #007cba; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .code { background: #e9ecef; padding: 10px; border-radius: 4px; font-family: monospace; margin: 10px 0; }
+        .button { background: #007cba; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px 0; }
+        .highlight { background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <h1>Debug Sale Creation</h1>
-    <button onclick="testSaleCreation()">Test Sale Creation</button>
-    <div id="result"></div>
+    <h1>🔐 MongoDB Authentication Fix - Exact Steps</h1>
+    
+    <div class="step error">
+        <h3>❌ Error: bad auth : authentication failed</h3>
+        <p>Username ya password galat hai. Naya user banayenge.</p>
+    </div>
+
+    <div class="step">
+        <h3>📋 Step 1: MongoDB Atlas - Delete Old User</h3>
+        
+        <p>1. <a href="https://cloud.mongodb.com" target="_blank" class="button">MongoDB Atlas</a> pe jaiye</p>
+        <p>2. Login kariye</p>
+        <p>3. Left sidebar mein <span class="highlight">Database Access</span> click kariye</p>
+        <p>4. Agar koi purana user hai to <span class="highlight">DELETE</span> kar diye</p>
+    </div>
+
+    <div class="step">
+        <h3>👤 Step 2: Naya User Banayiye</h3>
+        
+        <p>1. <span class="highlight">Add New Database User</span> click kariye</p>
+        <p>2. Authentication Method: <span class="highlight">Password</span></p>
+        <p>3. Exactly ye details bhariye:</p>
+        
+        <div class="code">
+Username: <span class="highlight">ankisho</span>
+Password: <span class="highlight">Pass123</span>
+        </div>
+        
+        <p>4. Database User Privileges:</p>
+        <div class="code">
+<span class="highlight">Read and write to any database</span>
+        </div>
+        
+        <p>5. <span class="highlight">Add User</span> click kariye</p>
+    </div>
+
+    <div class="step">
+        <h3>🔗 Step 3: Connection String Liye</h3>
+        
+        <p>1. Cluster pe <span class="highlight">Connect</span> button click kariye</p>
+        <p>2. <span class="highlight">Connect your application</span> choose kariye</p>
+        <p>3. Driver: <span class="highlight">Node.js</span> select kariye</p>
+        <p>4. Connection string copy kariye</p>
+        <p>5. <code>&lt;password&gt;</code> ko <code>Pass123</code> se replace kariye</p>
+        
+        <div class="code">
+mongodb+srv://ankisho:Pass123@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority
+        </div>
+        
+        <p>6. End mein database name add kariye:</p>
+        <div class="code">
+mongodb+srv://ankisho:Pass123@cluster0.xxxxx.mongodb.net/<span class="highlight">ankisho-billing</span>?retryWrites=true&w=majority
+        </div>
+    </div>
+
+    <div class="step warning">
+        <h3>⚙️ Step 4: Render mein Update Kariye</h3>
+        
+        <p>1. <a href="https://render.com" target="_blank" class="button">Render Dashboard</a> pe jaiye</p>
+        <p>2. Apni backend service select kariye</p>
+        <p>3. <span class="highlight">Environment</span> tab click kariye</p>
+        <p>4. <span class="highlight">MONGODB_URI</span> find kariye</p>
+        <p>5. Value update kariye with your actual cluster URL:</p>
+        
+        <div class="code">
+mongodb+srv://ankisho:Pass123@cluster0.xxxxx.mongodb.net/ankisho-billing?retryWrites=true&w=majority
+        </div>
+        
+        <p>6. <span class="highlight">Save Changes</span> click kariye</p>
+    </div>
+
+    <div class="step">
+        <h3>🚀 Step 5: Redeploy</h3>
+        
+        <p>1. Render dashboard mein <span class="highlight">Manual Deploy</span> click kariye</p>
+        <p>2. <span class="highlight">Logs</span> tab mein jaiye</p>
+        <p>3. Deployment complete hone ka wait kariye</p>
+        <p>4. Logs mein ye message dekho:</p>
+        
+        <div class="code success">
+✅ MongoDB connected successfully
+🚀 Server running on port 10000
+        </div>
+    </div>
+
+    <div class="step success">
+        <h3>✅ Step 6: Test Kariye</h3>
+        
+        <p>1. Backend URL pe jaiye:</p>
+        <div class="code">
+https://your-backend-name.onrender.com/api/health
+        </div>
+        
+        <p>2. Ye response aana chahiye:</p>
+        <div class="code">
+{
+  "success": true,
+  "message": "Ankisho Billing Software API is running"
+}
+        </div>
+    </div>
+
+    <div class="step warning">
+        <h3>🔍 Agar Abhi Bhi Error Aaye</h3>
+        
+        <p><strong>Check karo:</strong></p>
+        <ul>
+            <li>Username: <code>ankisho</code> (exactly)</li>
+            <li>Password: <code>Pass123</code> (exactly)</li>
+            <li>Database name: <code>ankisho-billing</code></li>
+            <li>Network Access: <code>0.0.0.0/0</code> allowed</li>
+        </ul>
+        
+        <p><strong>Common mistakes:</strong></p>
+        <ul>
+            <li>Space in username/password</li>
+            <li>Wrong cluster URL</li>
+            <li>Missing database name</li>
+            <li>IP not whitelisted</li>
+        </ul>
+    </div>
 
     <script>
-        async function testSaleCreation() {
-            const saleData = {
-                customerName: "Test Customer",
-                customerPhone: "1234567890",
-                invoiceNumber: "INV-" + Date.now(),
-                items: [
-                    {
-                        product: "68bf0345a8805b2ac9067a67",
-                        productName: "Test Product",
-                        quantity: 1,
-                        unitPrice: 150,
-                        discount: 0,
-                        discountType: "amount",
-                        gstRate: 18
-                    }
-                ],
-                subtotal: 150,
-                totalDiscount: 0,
-                totalGst: 27,
-                totalAmount: 177,
-                roundOffAmount: 0,
-                finalAmount: 177,
-                paidAmount: 177,
-                balanceAmount: 0,
-                paymentMethod: "cash",
-                paymentStatus: "paid",
-                saleDate: new Date().toISOString()
-            };
-
-            console.log('🚀 Sending sale data:', JSON.stringify(saleData, null, 2));
-
-            try {
-                const response = await fetch('http://localhost:5001/api/sales', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(saleData)
-                });
-
-                const result = await response.json();
-                
-                if (response.ok) {
-                    console.log('✅ Success:', result);
-                    document.getElementById('result').innerHTML = `<h2>Success!</h2><pre>${JSON.stringify(result, null, 2)}</pre>`;
-                } else {
-                    console.error('❌ Error:', result);
-                    document.getElementById('result').innerHTML = `<h2>Error!</h2><pre>${JSON.stringify(result, null, 2)}</pre>`;
-                }
-            } catch (error) {
-                console.error('❌ Network error:', error);
-                document.getElementById('result').innerHTML = `<h2>Network Error!</h2><pre>${error.message}</pre>`;
-            }
-        }
+        console.log('🔐 MongoDB Fix Guide - Step by Step Ready!');
+        console.log('📋 User: ankisho | Pass: Pass123 | DB: ankisho-billing');
     </script>
 </body>
 </html>

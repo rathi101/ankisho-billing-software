@@ -13,7 +13,7 @@
   status = 200
 
 [context.production.environment]
-  REACT_APP_API_URL = "https://ankisho-billing-backend.herokuapp.com/api"
+  REACT_APP_API_URL = "https://ankisho-billing-software.netlify.app/.netlify/functions/api"
 
 [context.deploy-preview.environment]
   REACT_APP_API_URL = "https://ankisho-billing-backend-dev.herokuapp.com/api"

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Backend Service on Render</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .step { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #007cba; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .code { background: #e9ecef; padding: 10px; border-radius: 4px; font-family: monospace; margin: 10px 0; }
+        .button { background: #007cba; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px 0; }
+        .highlight { background: #ffeb3b; padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+        .screenshot { border: 2px solid #ddd; border-radius: 8px; margin: 10px 0; max-width: 100%; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Create Backend Service on Render</h1>
+    
+    <div class="step warning">
+        <h3>⚠️ Backend Service Nahi Mili</h3>
+        <p>Render dashboard mein backend service nahi hai. Pehle create karni padegi.</p>
+    </div>
+
+    <div class="step">
+        <h3>📋 Step 1: Render mein Login</h3>
+        
+        <p>1. <a href="https://render.com" target="_blank" class="button">Render.com</a> pe jaiye</p>
+        <p>2. <span class="highlight">Sign Up</span> ya <span class="highlight">Log In</span> kariye</p>
+        <p>3. GitHub account se login karna best hai</p>
+    </div>
+
+    <div class="step">
+        <h3>🆕 Step 2: New Web Service Create Kariye</h3>
+        
+        <p>1. Dashboard mein <span class="highlight">New +</span> button click kariye</p>
+        <p>2. <span class="highlight">Web Service</span> select kariye</p>
+        <p>3. <span class="highlight">Build and deploy from a Git repository</span> choose kariye</p>
+    </div>
+
+    <div class="step">
+        <h3>🔗 Step 3: GitHub Repository Connect Kariye</h3>
+        
+        <p>1. <span class="highlight">Connect GitHub</span> click kariye</p>
+        <p>2. Repository search kariye: <code>ankisho-billing-software</code></p>
+        <p>3. <span class="highlight">Connect</span> button click kariye</p>
+        
+        <div class="code">
+Repository: <span class="highlight">rathi101/ankisho-billing-software</span>
+Branch: <span class="highlight">main</span>
+        </div>
+    </div>
+
+    <div class="step warning">
+        <h3>⚙️ Step 4: Service Configuration</h3>
+        
+        <p>Service details bhariye:</p>
+        
+        <div class="code">
+Name: <span class="highlight">ankisho-billing-backend</span>
+Region: <span class="highlight">Oregon (US West)</span>
+Branch: <span class="highlight">main</span>
+Root Directory: <span class="highlight">backend</span>
+Runtime: <span class="highlight">Node</span>
+Build Command: <span class="highlight">npm install</span>
+Start Command: <span class="highlight">npm start</span>
+        </div>
+        
+        <p><strong>Important:</strong> Root Directory mein <code>backend</code> likhna zaroori hai!</p>
+    </div>
+
+    <div class="step">
+        <h3>💰 Step 5: Plan Select Kariye</h3>
+        
+        <p>1. <span class="highlight">Free</span> plan select kariye</p>
+        <p>2. Free plan mein ye limitations hain:</p>
+        <ul>
+            <li>750 hours per month</li>
+            <li>Sleep after 15 minutes of inactivity</li>
+            <li>512 MB RAM</li>
+        </ul>
+        <p>3. Testing ke liye free plan sufficient hai</p>
+    </div>
+
+    <div class="step">
+        <h3>🔧 Step 6: Environment Variables Add Kariye</h3>
+        
+        <p>Service create karne se pehle ye environment variables add kariye:</p>
+        
+        <div class="code">
+NODE_ENV = <span class="highlight">production</span>
+JWT_SECRET = <span class="highlight">ankisho_billing_jwt_secret_2024</span>
+JWT_EXPIRES_IN = <span class="highlight">30d</span>
+FRONTEND_URL = <span class="highlight">https://ankisho-billing-software.netlify.app</span>
+        </div>
+        
+        <p><strong>Database:</strong> Abhi database variable nahi add kariye, pehle service create kariye</p>
+    </div>
+
+    <div class="step success">
+        <h3>✅ Step 7: Create Service</h3>
+        
+        <p>1. <span class="highlight">Create Web Service</span> button click kariye</p>
+        <p>2. Deployment start hoga (5-10 minutes lagenge)</p>
+        <p>3. Logs mein deployment progress dekh sakte hain</p>
+        
+        <p><strong>Expected URL:</strong></p>
+        <div class="code">
+https://ankisho-billing-backend.onrender.com
+        </div>
+    </div>
+
+    <div class="step warning">
+        <h3>⚠️ First Deployment Will Fail</h3>
+        
+        <p>Pehli deployment fail hogi kyunki database connection nahi hai. Ye normal hai!</p>
+        
+        <p><strong>Error message aayega:</strong></p>
+        <div class="code error">
+❌ MongoDB connection error
+        </div>
+        
+        <p><strong>Solution:</strong> Next step mein database add karenge</p>
+    </div>
+
+    <div class="step">
+        <h3>🗄️ Step 8: PostgreSQL Database Add Kariye</h3>
+        
+        <p>Service create hone ke baad:</p>
+        
+        <p>1. Dashboard mein <span class="highlight">New +</span> click kariye</p>
+        <p>2. <span class="highlight">PostgreSQL</span> select kariye</p>
+        <p>3. Database details:</p>
+        
+        <div class="code">
+Name: <span class="highlight">ankisho-billing-db</span>
+Database: <span class="highlight">ankisho_billing</span>
+User: <span class="highlight">ankisho</span>
+        </div>
+        
+        <p>4. <span class="highlight">Create Database</span> click kariye</p>
+    </div>
+
+    <div class="step">
+        <h3>🔗 Step 9: Database ko Service se Connect Kariye</h3>
+        
+        <p>1. Backend service mein jaiye</p>
+        <p>2. <span class="highlight">Environment</span> tab click kariye</p>
+        <p>3. Database connection string add kariye:</p>
+        
+        <div class="code">
+DATABASE_URL = <span class="highlight">postgres://ankisho:XXXXX@dpg-xxxxx-a.oregon-postgres.render.com/ankisho_billing</span>
+DB_TYPE = <span class="highlight">postgresql</span>
+        </div>
+        
+        <p>4. <span class="highlight">Save Changes</span> click kariye</p>
+    </div>
+
+    <div class="step success">
+        <h3>🎉 Step 10: Final Deployment</h3>
+        
+        <p>1. <span class="highlight">Manual Deploy</span> click kariye</p>
+        <p>2. Logs mein success message dekho:</p>
+        
+        <div class="code success">
+✅ PostgreSQL connected successfully
+🚀 Server running on port 10000
+        </div>
+        
+        <p>3. Health check test kariye:</p>
+        <div class="code">
+https://ankisho-billing-backend.onrender.com/api/health
+        </div>
+    </div>
+
+    <div class="step warning">
+        <h3>💡 Troubleshooting Tips</h3>
+        
+        <h4>Issue 1: GitHub Repository Not Found</h4>
+        <p><strong>Solution:</strong> Make sure repository is public or GitHub account is connected</p>
+        
+        <h4>Issue 2: Build Fails</h4>
+        <p><strong>Solution:</strong> Check Root Directory is set to <code>backend</code></p>
+        
+        <h4>Issue 3: Service Won't Start</h4>
+        <p><strong>Solution:</strong> Check Start Command is <code>npm start</code></p>
+        
+        <h4>Issue 4: Database Connection Fails</h4>
+        <p><strong>Solution:</strong> Make sure DATABASE_URL is correct</p>
+    </div>
+
+    <script>
+        console.log('🚀 Backend Service Creation Guide Ready!');
+        console.log('📋 Steps: 1) Login 2) New Service 3) Connect GitHub 4) Configure 5) Deploy');
+    </script>
+</body>
+</html>

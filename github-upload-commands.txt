@@ -16,5 +16,42 @@ git push -u origin main
 echo "✅ Upload complete! Your repository is now live on GitHub"
 echo "🌐 Repository URL: https://github.com/YOUR_USERNAME/ankisho-billing-software"
 
+# MongoDB Alternative Solution - Use Railway PostgreSQL
+
+## Problem: MongoDB Atlas authentication keeps failing
+## Solution: Use Railway's PostgreSQL database (more reliable)
+
+## Step 1: Update Backend to Use PostgreSQL
+```bash
+cd backend
+npm install pg sequelize
+npm uninstall mongoose
+```
+
+## Step 2: Railway PostgreSQL Setup
+1. Go to railway.app
+2. Create new project
+3. Add PostgreSQL database
+4. Get connection string: postgresql://user:pass@host:port/dbname
+
+## Step 3: Update Environment Variables
+```
+DATABASE_URL=postgresql://user:pass@host:port/dbname
+NODE_ENV=production
+JWT_SECRET=ankisho_billing_jwt_secret_2024
+FRONTEND_URL=https://ankisho-billing-software.netlify.app
+```
+
+## Alternative: Use MongoDB Atlas with Different Approach
+1. Create new cluster with different name
+2. Use simple password: "password123"
+3. Username: "admin"
+4. Connection: mongodb+srv://admin:password123@newcluster.mongodb.net/billing
+
+## Quick Fix: Use Render's Built-in PostgreSQL
+1. In Render, add PostgreSQL database
+2. Connect to web service
+3. Use DATABASE_URL environment variable
+
 # Alternative: If you get authentication error, use personal access token:
 # git remote set-url origin https://YOUR_TOKEN@github.com/YOUR_USERNAME/ankisho-billing-software.git

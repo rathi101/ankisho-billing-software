@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix MongoDB Atlas Connection</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .step { background: #f8f9fa; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #007cba; }
+        .error { background: #f8d7da; border-left: 4px solid #dc3545; }
+        .success { background: #d4edda; border-left: 4px solid #28a745; }
+        .warning { background: #fff3cd; border-left: 4px solid #ffc107; }
+        .code { background: #e9ecef; padding: 10px; border-radius: 4px; font-family: monospace; margin: 10px 0; }
+        .button { background: #007cba; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px 0; }
+        img { max-width: 100%; height: auto; border: 1px solid #ddd; border-radius: 4px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Fix MongoDB Atlas Connection Error</h1>
+    
+    <div class="step error">
+        <h3>❌ Current Error</h3>
+        <p><strong>MongoDB connection error:</strong> Could not connect to any servers in your MongoDB Atlas cluster.</p>
+        <p><strong>Reason:</strong> IP address not whitelisted</p>
+    </div>
+
+    <div class="step">
+        <h3>🔧 Solution: Fix IP Whitelist</h3>
+        
+        <h4>Step 1: Go to MongoDB Atlas</h4>
+        <p>1. Open <a href="https://cloud.mongodb.com" target="_blank" class="button">MongoDB Atlas</a></p>
+        <p>2. Login to your account</p>
+        <p>3. Select your cluster</p>
+        
+        <h4>Step 2: Network Access Settings</h4>
+        <p>1. Click on <strong>"Network Access"</strong> in left sidebar</p>
+        <p>2. Click <strong>"Add IP Address"</strong></p>
+        <p>3. Choose <strong>"Allow Access from Anywhere"</strong></p>
+        <p>4. Or add IP: <code>0.0.0.0/0</code></p>
+        
+        <div class="code">
+IP Address: 0.0.0.0/0
+Comment: Allow all IPs for deployment
+        </div>
+        
+        <h4>Step 3: Database Access</h4>
+        <p>1. Click <strong>"Database Access"</strong> in left sidebar</p>
+        <p>2. Make sure user exists with <strong>"Read and write to any database"</strong> permission</p>
+        <p>3. Note down username and password</p>
+    </div>
+
+    <div class="step warning">
+        <h3>⚙️ Update Environment Variables</h3>
+        <p>In your Render.com dashboard, update the MONGODB_URI:</p>
+        
+        <div class="code">
+MONGODB_URI=mongodb+srv://USERNAME:PASSWORD@cluster0.xxxxx.mongodb.net/ankisho-billing?retryWrites=true&w=majority
+        </div>
+        
+        <p><strong>Replace:</strong></p>
+        <ul>
+            <li><code>USERNAME</code> - Your MongoDB user</li>
+            <li><code>PASSWORD</code> - Your MongoDB password</li>
+            <li><code>cluster0.xxxxx</code> - Your actual cluster URL</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h3>🚀 Alternative: Use MongoDB Connection String Builder</h3>
+        <p>1. In MongoDB Atlas, click <strong>"Connect"</strong> on your cluster</p>
+        <p>2. Choose <strong>"Connect your application"</strong></p>
+        <p>3. Select <strong>"Node.js"</strong> and version <strong>"4.1 or later"</strong></p>
+        <p>4. Copy the connection string</p>
+        <p>5. Replace <code>&lt;password&gt;</code> with your actual password</p>
+    </div>
+
+    <div class="step success">
+        <h3>✅ Test Connection</h3>
+        <p>After updating:</p>
+        <p>1. Go to your Render dashboard</p>
+        <p>2. Redeploy your service</p>
+        <p>3. Check logs for: <code>✅ MongoDB connected successfully</code></p>
+        <p>4. Test health endpoint: <code>https://your-backend-url.onrender.com/api/health</code></p>
+    </div>
+
+    <div class="step">
+        <h3>🔗 Quick Links</h3>
+        <p><a href="https://cloud.mongodb.com" target="_blank" class="button">MongoDB Atlas</a></p>
+        <p><a href="https://render.com" target="_blank" class="button">Render Dashboard</a></p>
+        <p><a href="https://ankisho-billing-software.netlify.app" target="_blank" class="button">Your Frontend</a></p>
+    </div>
+
+    <div class="step warning">
+        <h3>💡 Common Issues & Solutions</h3>
+        
+        <h4>Issue 1: Wrong Connection String</h4>
+        <p><strong>Solution:</strong> Make sure connection string has correct format:</p>
+        <div class="code">mongodb+srv://user:pass@cluster.mongodb.net/dbname</div>
+        
+        <h4>Issue 2: Special Characters in Password</h4>
+        <p><strong>Solution:</strong> URL encode special characters:</p>
+        <ul>
+            <li><code>@</code> becomes <code>%40</code></li>
+            <li><code>#</code> becomes <code>%23</code></li>
+            <li><code>$</code> becomes <code>%24</code></li>
+        </ul>
+        
+        <h4>Issue 3: Database Name Missing</h4>
+        <p><strong>Solution:</strong> Add database name after cluster URL:</p>
+        <div class="code">mongodb+srv://user:pass@cluster.mongodb.net/ankisho-billing</div>
+    </div>
+
+    <script>
+        console.log('🔧 MongoDB Atlas Fix Guide Ready!');
+        console.log('📋 Steps: 1) Fix IP Whitelist 2) Update Connection String 3) Redeploy');
+    </script>
+</body>
+</html>

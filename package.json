@@ -1,0 +1,26 @@
+{
+  "name": "ankisho-billing-software",
+  "version": "1.0.0",
+  "description": "Complete billing and inventory management system",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm start",
+    "dev": "cd frontend && npm start"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "serverless-http": "^3.2.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "billing",
+    "inventory",
+    "management",
+    "react",
+    "nodejs"
+  ],
+  "author": "Ankit Rathi",
+  "license": "MIT"
+}
