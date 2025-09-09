@@ -25,13 +25,14 @@ exports.handler = async (event, context) => {
     headers,
     body: JSON.stringify({
       debug: true,
+      timestamp: new Date().toISOString(),
       event: {
         httpMethod,
         path,
         queryStringParameters,
         headers: event.headers
       },
-      message: 'Debug response to understand Netlify Functions structure'
+      message: 'Debug response to understand Netlify Functions structure - Updated'
     })
   };
 
