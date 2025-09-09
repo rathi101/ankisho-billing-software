@@ -41,6 +41,15 @@ let suppliers = [];
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 // Health Check
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Ankisho Billing Software API is running',
+    timestamp: new Date().toISOString(),
+    environment: 'serverless'
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     success: true,
