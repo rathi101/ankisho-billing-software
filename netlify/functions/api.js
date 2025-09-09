@@ -41,120 +41,133 @@ exports.handler = async (event, context) => {
     }
   ];
 
-  // Debug: log the incoming path
-  console.log('Incoming path:', path);
-  
-  // Route handling - extract the actual route from the path
-  let route = path.replace('/.netlify/functions/api', '') || '/';
-  console.log('Processed route:', route);
+  // Route handling - path in Netlify Functions is just the path after the function name
+  const route = path || '/';
   
   try {
-    switch (route) {
-      case '':
-      case '/':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            message: '🧾 Welcome to Ankisho Billing Software API',
-            version: '1.0.0',
-            type: 'serverless',
-            status: 'running'
-          })
-        };
-
-      case '/health':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            success: true,
-            message: 'Ankisho Billing Software API is running',
-            timestamp: new Date().toISOString(),
-            environment: 'serverless'
-          })
-        };
-
-      case '/products':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: products })
-        };
-
-      case '/customers':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: customers })
-        };
-
-      case '/sales':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: sales })
-        };
-
-      case '/dashboard':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({
-            success: true,
-            data: {
-              totalSales: 200,
-              totalProducts: products.length,
-              totalCustomers: customers.length,
-              totalPurchases: 0,
-              recentSales: sales,
-              salesData: [
-                { month: 'Jan', sales: 1000 },
-                { month: 'Feb', sales: 1500 },
-                { month: 'Mar', sales: 2000 }
-              ]
-            }
-          })
-        };
-
-      case '/purchases':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: [] })
-        };
-
-      case '/suppliers':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: [] })
-        };
-
-      case '/staff':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: [] })
-        };
-
-      case '/marketplace/configs':
-        return {
-          statusCode: 200,
-          headers,
-          body: JSON.stringify({ success: true, data: [] })
-        };
-
-      default:
-        return {
-          statusCode: 404,
-          headers,
-          body: JSON.stringify({
-            success: false,
-            message: `Route ${route} not found`
-          })
-        };
+    // Handle root path
+    if (route === '/' || route === '') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          message: '🧾 Welcome to Ankisho Billing Software API',
+          version: '1.0.0',
+          type: 'serverless',
+          status: 'running'
+        })
+      };
     }
+
+    // Handle health check
+    if (route === '/health') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          message: 'Ankisho Billing Software API is running',
+          timestamp: new Date().toISOString(),
+          environment: 'serverless'
+        })
+      };
+    }
+
+    // Handle products
+    if (route === '/products') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: products })
+      };
+    }
+
+    // Handle customers
+    if (route === '/customers') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: customers })
+      };
+    }
+
+    // Handle sales
+    if (route === '/sales') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: sales })
+      };
+    }
+
+    // Handle dashboard
+    if (route === '/dashboard') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          data: {
+            totalSales: 200,
+            totalProducts: products.length,
+            totalCustomers: customers.length,
+            totalPurchases: 0,
+            recentSales: sales,
+            salesData: [
+              { month: 'Jan', sales: 1000 },
+              { month: 'Feb', sales: 1500 },
+              { month: 'Mar', sales: 2000 }
+            ]
+          }
+        })
+      };
+    }
+
+    // Handle purchases
+    if (route === '/purchases') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: [] })
+      };
+    }
+
+    // Handle suppliers
+    if (route === '/suppliers') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: [] })
+      };
+    }
+
+    // Handle staff
+    if (route === '/staff') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: [] })
+      };
+    }
+
+    // Handle marketplace configs
+    if (route === '/marketplace/configs') {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, data: [] })
+      };
+    }
+
+    // Default 404
+    return {
+      statusCode: 404,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        message: `Route ${route} not found`
+      })
+    };
   } catch (error) {
     return {
       statusCode: 500,
