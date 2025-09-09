@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Sale Creation</title>
+</head>
+<body>
+    <h1>Debug Sale Creation</h1>
+    <button onclick="testSaleCreation()">Test Sale Creation</button>
+    <div id="result"></div>
+
+    <script>
+        async function testSaleCreation() {
+            const saleData = {
+                customerName: "Test Customer",
+                customerPhone: "1234567890",
+                invoiceNumber: "INV-" + Date.now(),
+                items: [
+                    {
+                        product: "68bf0345a8805b2ac9067a67",
+                        productName: "Test Product",
+                        quantity: 1,
+                        unitPrice: 150,
+                        discount: 0,
+                        discountType: "amount",
+                        gstRate: 18
+                    }
+                ],
+                subtotal: 150,
+                totalDiscount: 0,
+                totalGst: 27,
+                totalAmount: 177,
+                roundOffAmount: 0,
+                finalAmount: 177,
+                paidAmount: 177,
+                balanceAmount: 0,
+                paymentMethod: "cash",
+                paymentStatus: "paid",
+                saleDate: new Date().toISOString()
+            };
+
+            console.log('🚀 Sending sale data:', JSON.stringify(saleData, null, 2));
+
+            try {
+                const response = await fetch('http://localhost:5001/api/sales', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(saleData)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    console.log('✅ Success:', result);
+                    document.getElementById('result').innerHTML = `<h2>Success!</h2><pre>${JSON.stringify(result, null, 2)}</pre>`;
+                } else {
+                    console.error('❌ Error:', result);
+                    document.getElementById('result').innerHTML = `<h2>Error!</h2><pre>${JSON.stringify(result, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                console.error('❌ Network error:', error);
+                document.getElementById('result').innerHTML = `<h2>Network Error!</h2><pre>${error.message}</pre>`;
+            }
+        }
+    </script>
+</body>
+</html>
