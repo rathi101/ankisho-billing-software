@@ -19,6 +19,22 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // Debug: Return event details to understand the structure
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({
+      debug: true,
+      event: {
+        httpMethod,
+        path,
+        queryStringParameters,
+        headers: event.headers
+      },
+      message: 'Debug response to understand Netlify Functions structure'
+    })
+  };
+
   // Sample data
   const products = [
     { _id: '1', name: 'Sample Product 1', price: 100, stock: 50, category: 'Electronics' },
