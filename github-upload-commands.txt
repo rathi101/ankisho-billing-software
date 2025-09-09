@@ -1,0 +1,20 @@
+#!/bin/bash
+# GitHub Upload Commands for Ankisho Billing Software
+
+# Step 1: Repository create करने के बाद, GitHub से मिला URL use करें
+# Replace YOUR_USERNAME with your actual GitHub username
+
+echo "Adding GitHub remote..."
+git remote add origin https://github.com/YOUR_USERNAME/ankisho-billing-software.git
+
+echo "Setting main branch..."
+git branch -M main
+
+echo "Pushing to GitHub..."
+git push -u origin main
+
+echo "✅ Upload complete! Your repository is now live on GitHub"
+echo "🌐 Repository URL: https://github.com/YOUR_USERNAME/ankisho-billing-software"
+
+# Alternative: If you get authentication error, use personal access token:
+# git remote set-url origin https://YOUR_TOKEN@github.com/YOUR_USERNAME/ankisho-billing-software.git
