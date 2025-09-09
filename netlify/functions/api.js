@@ -41,8 +41,12 @@ exports.handler = async (event, context) => {
     }
   ];
 
+  // Debug: log the incoming path
+  console.log('Incoming path:', path);
+  
   // Route handling - extract the actual route from the path
   let route = path.replace('/.netlify/functions/api', '') || '/';
+  console.log('Processed route:', route);
   
   try {
     switch (route) {
